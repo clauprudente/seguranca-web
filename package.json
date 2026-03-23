@@ -1,0 +1,29 @@
+{
+  "name": "seguranca-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "back/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node back/server.js",
+    "dev": "nodemon back/server.js"
+  },
+  "keywords": [],
+  "author": "Cláudia Prudente",
+  "license": "ISC",
+  "dependencies": {
+    "argon2": "^0.44.0",
+    "csurf": "^1.11.0",
+    "dotenv-safe": "^9.1.0",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "sqlite3": "^6.0.1",
+    "dotenv": "^16.4.1",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "csrf-csrf": "^2.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
