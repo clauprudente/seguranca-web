@@ -9,7 +9,7 @@ app.use(helmet());
 app.use(express.static(path.join(__dirname, "../front/assets")));
 app.use(express.urlencoded({ extended: false }));
 app.use(security.sessionMiddleware);
-
+app.use(security.doubleCsrfProtection);
 app.use(router);
 app.use(security.errorHandler);
 

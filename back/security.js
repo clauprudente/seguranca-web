@@ -1,4 +1,5 @@
 const session = require("express-session");
+const { doubleCsrf } = require("csrf-csrf");
 
 // Duração de Sessão
 const sessionMiddleware = session({
@@ -30,4 +31,17 @@ const errorHandler = (err, req, res, next) => {
   res.status(500).sendFile(path.join(__dirname, "../front/views/error.html"));
 };
 
-module.exports = { sessionMiddleware, requireAuth, errorHandler };
+const { generateToken, doubleCsrfProtection } = doubleCsrf({
+  getSecret: () => process.env.SESSION_SECRET,
+  cookieName: "x-csrf-token",
+  cookieOptions: { sameSite: "strict", secure: false, httpOnly: true },
+  getTokenFromRequest: (req) => req.body._csrf,
+});
+
+module.exports = {
+  sessionMiddleware,
+  requireAuth,
+  errorHandler,
+  generateToken,
+  doubleCsrfProtection,
+};
