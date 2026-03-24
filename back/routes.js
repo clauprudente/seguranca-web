@@ -9,14 +9,19 @@ router.get("/", (req, res) => res.redirect("/login"));
 router.get("/login", (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/login.html")),
 );
+
 router.get("/cadastro", requireAuth("admin"), (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/register.html")),
+  res.sendFile(path.join(__dirname, "../front/views/cadastro.html")),
 );
 router.get("/administradores", requireAuth("admin"), (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/admin.html")),
+  res.sendFile(path.join(__dirname, "../front/views/administradores.html")),
 );
 router.get("/usuarios", requireAuth("user"), (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/user.html")),
+  res.sendFile(path.join(__dirname, "../front/views/usuarios.html")),
 );
+
+router.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "../front/views/error.html"));
+});
 
 module.exports = router;
