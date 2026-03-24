@@ -11,7 +11,7 @@ db.exec(`
   )
 `);
 
-const createUser = (login, passwordHash, role) => {
+const createUser = (login, passwordHash, role = "user") => {
   const stmt = db.prepare(
     "INSERT INTO users (login, passwordHash, role, creationDate) VALUES (@login, @passwordHash, @role, @creationDate)",
   );

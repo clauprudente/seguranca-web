@@ -20,9 +20,16 @@ router.get("/cadastro", requireAuth("admin"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/cadastro.html")),
 );
 
+router.get("/cadastro", (req, res) => {
+  const { login, password, role } = req.body;
+
+  console.login(login, password, role); // só para testar por agora
+});
+
 router.get("/administradores", requireAuth("admin"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/administradores.html")),
 );
+
 router.get("/usuarios", requireAuth("user"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/usuarios.html")),
 );
