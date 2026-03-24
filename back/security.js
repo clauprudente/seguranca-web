@@ -7,7 +7,7 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: "strict",
     maxAge: 15 * 60 * 1000, // 15 min inactivity expiry
   },
@@ -25,4 +25,9 @@ const requireAuth = (...roles) => {
   };
 };
 
-module.exports = { requireAuth };
+const errorHandler = (err, req, res, next) => {
+  console.error(err); // detalhe só no servidor
+  res.status(500).sendFile(path.join(__dirname, "../front/views/error.html"));
+};
+
+module.exports = { sessionMiddleware, requireAuth, errorHandler };

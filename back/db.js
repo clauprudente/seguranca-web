@@ -1,5 +1,8 @@
+const path = require("path");
 const Database = require("better-sqlite3");
-const db = new Database("security.db", { verbose: console.log });
+const argon2 = require("argon2");
+
+const db = new Database(path.join(__dirname, "../security.db"));
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
@@ -27,5 +30,16 @@ const findUserByUsername = (login) => {
   const stmt = db.prepare("SELECT * FROM users WHERE login = ?");
   return stmt.get(login);
 };
+
+const seedAdmin = async () => {
+  const exists = findUserByUsername("admin");
+  if (!exists) {
+    const hash = await argon2.hash("admin123");
+    createUser("admin", hash, "admin");
+    console.log("Admin criado — login: admin, password: admin123");
+  }
+};
+
+seedAdmin();
 
 module.exports = { createUser, findUserByUsername };
