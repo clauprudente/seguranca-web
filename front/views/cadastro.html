@@ -11,16 +11,29 @@
   <h1>Cadastro de Usuários</h1>
   <form action="/pagina-processa-dados-do-form" method="post">
     <div>
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" />
+      <label for="login">Login do usuário:</label>
+      <input type="text" id="login" />
     </div>
     <div>
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" />
+      <label for="password">Senha do usuário:</label>
+      <input type="password" id="password" />
     </div>
-    <div>
-      <label for="msg">Mensagem:</label>
-      <textarea id="msg"></textarea>
+    <fieldset>
+      <legend>Selecione o tipo do usuário:</legend>
+
+      <div>
+        <input type="radio" id="comum" name="usuario" value="comum" checked />
+        <label for="comum">Comum</label>
+      </div>
+
+      <div>
+        <input type="radio" id="admin" name="usuario" value="admin" />
+        <label for="admin">Admin</label>
+      </div>
+    </fieldset>
+
+    <div class="button">
+      <button type="submit">Cadastrar</button>
     </div>
   </form>
 </body>
