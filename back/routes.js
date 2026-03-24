@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const { requireAuth } = require("./security");
+const { login, register } = require("./controller/authController");
 
 router.get("/", (req, res) => res.redirect("/login"));
 
@@ -10,21 +11,13 @@ router.get("/login", (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/login.html")),
 );
 
-router.post("/login", (req, res) => {
-  const { login, password } = req.body;
-
-  console.log(login, password); // só para testar por agora
-});
+router.post("/login", (req, res) => login);
 
 router.get("/cadastro", requireAuth("admin"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/cadastro.html")),
 );
 
-router.get("/cadastro", (req, res) => {
-  const { login, password, role } = req.body;
-
-  console.login(login, password, role); // só para testar por agora
-});
+router.get("/cadastro", (req, res) => register);
 
 router.get("/administradores", requireAuth("admin"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/administradores.html")),
