@@ -13,15 +13,17 @@
   "license": "ISC",
   "dependencies": {
     "argon2": "^0.44.0",
+    "better-sqlite3": "^12.8.0",
+    "cookie-parser": "^1.4.7",
+    "csrf-csrf": "^2.3.0",
     "csurf": "^1.11.0",
+    "dotenv": "^16.6.1",
     "dotenv-safe": "^9.1.0",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "sqlite3": "^6.0.1",
-    "dotenv": "^16.4.1",
-    "express-validator": "^7.0.1",
-    "helmet": "^7.1.0",
-    "csrf-csrf": "^2.2.3"
+    "express-validator": "^7.3.1",
+    "helmet": "^7.2.0",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

@@ -10,9 +10,16 @@ router.get("/login", (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/login.html")),
 );
 
+router.post("/login", (req, res) => {
+  const { login, password } = req.body;
+
+  console.log(login, password); // só para testar por agora
+});
+
 router.get("/cadastro", requireAuth("admin"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/cadastro.html")),
 );
+
 router.get("/administradores", requireAuth("admin"), (req, res) =>
   res.sendFile(path.join(__dirname, "../front/views/administradores.html")),
 );
