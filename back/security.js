@@ -34,7 +34,7 @@ const errorHandler = (err, req, res, next) => {
 const { generateToken, doubleCsrfProtection } = doubleCsrf({
   getSecret: () => process.env.SESSION_SECRET,
   cookieName: "x-csrf-token",
-  cookieOptions: { sameSite: "strict", secure: false, httpOnly: true },
+  cookieOptions: { sameSite: "strict", secure: true, httpOnly: true },
   getTokenFromRequest: (req) => req.body._csrf,
 });
 
