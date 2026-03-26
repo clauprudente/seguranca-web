@@ -4,10 +4,16 @@ const router = express.Router();
 const { requireAuth, generateToken } = require("./security");
 const authController = require("./controllers/authController");
 
-router.get("/", (req, res) => res.redirect("/login"));
+router.get("/", (req, res) =>
+  res.render("login", { csrfToken: generateToken(req, res) }),
+);
 
 router.get("/login", (req, res) =>
   res.render("login", { csrfToken: generateToken(req, res) }),
+);
+
+router.get("/negado", (req, res) =>
+  res.render("negado", { csrfToken: generateToken(req, res) }),
 );
 
 router.post("/login", authController.loginValidation, authController.login);
