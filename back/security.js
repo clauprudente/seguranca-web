@@ -8,9 +8,9 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "strict",
-    maxAge: 15 * 60 * 1000, // 15 min inactivity expiry
+    maxAge: 15 * 60 * 1000,
   },
 });
 
@@ -26,15 +26,17 @@ const requireAuth = (...roles) => {
   };
 };
 
+// Tratamento de Erros
 const errorHandler = (err, req, res, next) => {
-  console.error(err); // detalhe só no servidor
-  res.status(500).sendFile(path.join(__dirname, "../front/views/error.html"));
+  console.error(err);
+  res.status(500).render("error");
 };
 
+// Proteção CSRF
 const { generateToken, doubleCsrfProtection } = doubleCsrf({
   getSecret: () => process.env.SESSION_SECRET,
   cookieName: "x-csrf-token",
-  cookieOptions: { sameSite: "strict", secure: true, httpOnly: true },
+  cookieOptions: { sameSite: "strict", secure: true, httpOnly: false },
   getTokenFromRequest: (req) => req.body._csrf,
 });
 

@@ -10,6 +10,8 @@
 <body>
   <h1>Cadastro de Usuários</h1>
   <form action="/cadastro" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
     <div>
       <label for="login">Login do usuário:</label>
       <input type="text" id="login" name="login" required />

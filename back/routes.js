@@ -1,36 +1,40 @@
 "use strict";
 const express = require("express");
 const router = express.Router();
-const path = require("path");
-const { requireAuth } = require("./security");
+const { requireAuth, generateToken } = require("./security");
 const authController = require("./controllers/authController");
 
 router.get("/", (req, res) => res.redirect("/login"));
 
 router.get("/login", (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/login.html")),
+  res.render("login", { csrfToken: generateToken(req, res) }),
 );
 
-router.post("/login", authController.login);
+router.post("/login", authController.loginValidation, authController.login);
 
 router.get("/cadastro", requireAuth("admin"), (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/cadastro.html")),
+  res.render("cadastro", { csrfToken: generateToken(req, res) }),
 );
 
-router.post("/cadastro", requireAuth("admin"), authController.register);
+router.post(
+  "/cadastro",
+  requireAuth("admin"),
+  authController.registerValidation,
+  authController.register,
+);
 
 router.post("/logout", authController.logout);
 
 router.get("/administradores", requireAuth("admin"), (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/administradores.html")),
+  res.render("administradores", { csrfToken: generateToken(req, res) }),
 );
 
 router.get("/usuarios", requireAuth("user"), (req, res) =>
-  res.sendFile(path.join(__dirname, "../front/views/usuarios.html")),
+  res.render("usuarios", { csrfToken: generateToken(req, res) }),
 );
 
 router.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, "../front/views/error.html"));
+  res.status(404).render("error");
 });
 
 module.exports = router;

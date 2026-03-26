@@ -1,8 +1,12 @@
 const argon2 = require("argon2");
 const { findUserByUsername, createUser } = require("../db");
+const { body, validationResult } = require("express-validator");
 
 const login = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.redirect("/login");
+
     const { login, password } = req.body;
 
     const user = findUserByUsername(login);
@@ -17,7 +21,6 @@ const login = async (req, res) => {
       return res.redirect("/login");
     }
 
-    // regenera o ID de sessão após login (requisito do enunciado)
     req.session.regenerate((err) => {
       if (err) return res.redirect("/login");
 
@@ -29,13 +32,14 @@ const login = async (req, res) => {
       return res.redirect("/usuarios");
     });
   } catch (err) {
-    console.error(err); // detalhe só no servidor
     return res.redirect("/login"); // mensagem genérica para o cliente
   }
 };
 
 const register = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.redirect("/login");
     const { login, password, role } = req.body;
 
     const userAlreadyExists = findUserByUsername(login);
@@ -59,4 +63,21 @@ const logout = (req, res) => {
   });
 };
 
-module.exports = { login, register, logout };
+const loginValidation = [
+  body("login").trim().notEmpty().escape(),
+  body("password").trim().notEmpty(),
+];
+
+const registerValidation = [
+  body("login").trim().notEmpty().escape().isLength({ min: 3, max: 20 }),
+  body("password").trim().notEmpty().isLength({ min: 6 }),
+  body("role").trim().isIn(["admin", "user"]),
+];
+
+module.exports = {
+  login,
+  register,
+  logout,
+  loginValidation,
+  registerValidation,
+};

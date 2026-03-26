@@ -12,6 +12,8 @@
 <body>
   <h1>Login</h1>
   <form action="/login" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
     <div>
       <label for="login">Login:</label>
       <input type="text" id="login" name="login" />
